@@ -1,0 +1,145 @@
+using System;
+
+public class Program
+{
+	public static void Main()
+	{
+		Console.Write("Введите количество строк матрицы: ");
+		int n = Convert.ToInt32(Console.ReadLine());
+		if ((n <= 0) || (n > 10))
+		{
+			Console.WriteLine("Неверное значение для количества строк. Укажите значение, принадлежажее отрезку [1;10]");
+			return;
+		}
+		Console.Write("Введите количество столбцов матрицы: ");
+		int m = Convert.ToInt32(Console.ReadLine());
+		if ((m <= 0) || (m > 10))
+		{
+			Console.WriteLine("Неверное значение для количества столбцов. Укажите значение, принадлежажее отрезку [1;10]");
+			return;
+		}
+		int[,] array = new int[n, m];
+		Console.Write("Вводите элементы матрицы\n");
+		for (int i = 0; i < n; i++)
+		{
+			string A = Console.ReadLine();
+			int[] curr = A.Split(' ').Select(int.Parse).ToArray(); // преобразование строки элементов в отдельные int-овые элементы, представление их в виде массива
+			for (int j = 0; j < m; j++)
+			{
+				array[i, j] = curr[j];
+			}
+		}
+		int k = 0, l = 0;
+		bool f = true; // флаг имеет значение true, если все элементы удовлетворяют поставленным условиям
+		while ((k < n) && (f))
+		{
+			l = 0;
+			while ((l < m) && (f))
+			{
+				if ((array[k, l] < -100) || (array[k, l] > 100))
+					f = false;
+				l++;
+			}
+			k++;
+		}
+		if (f == false)
+		{
+			Console.WriteLine("В матрице найден элемент, значение которого не удовлетворяет условию задачи. Укажите значение в пределах [-100;100]");
+			return;
+		}
+		Console.WriteLine("\nЗадана матрица размерами {0} x {1}", n, m);
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < m; j++)
+			{
+				Console.Write(array[i, j] + " ");
+			}
+			Console.WriteLine();
+		}
+		Console.WriteLine("\nВыберите, что вы хотите найти\n0 - для поиска минимального элемента\n1 - для поиска максимального элемента\n2 - для поиска максимального и минимального элементов");
+		int variant = Convert.ToInt32(Console.ReadLine());
+		if ((k == 1) && (l == 1))
+        {
+			Console.WriteLine("\nМатрица состоит из одного элемента = {0}. Этот элемент является и максимальным, и минимальным", array[0, 0]);
+			return;
+        }
+		int max = array[0, 0], min = array[0, 0], row0 = 1, column0 = 1, row1 = 1, column1 = 1;
+		k = 0;
+		if (variant == 0)
+		{
+			while (k < n)
+			{
+				l = 0;
+				while (l < m)
+				{
+					if (array[k, l] < min)
+					{
+						min = array[k, l];
+						row0 = k + 1;
+						column0 = l + 1;
+					}
+					l++;
+				}
+				k++;
+			}
+			Console.WriteLine("\nПервый минимальный элемент = {0} и имеет адрес[{1},{2}]", min, row0, column0);
+		}
+		if (variant == 1)
+		{
+			while (k < n)
+			{
+				l = 0;
+				while (l < m)
+				{
+					if (array[k, l] > max)
+					{
+						max = array[k, l];
+						row1 = k + 1;
+						column1 = l + 1;
+					}
+					l++;
+				}
+				k++;
+			}
+			Console.WriteLine("\nПервый максимальный элемент = {0} и имеет адрес[{1},{2}]", max, row1, column1);
+		}
+		if (variant == 2)
+		{
+			while (k < n)
+			{
+				l = 0;
+				while (l < m)
+				{
+					if (array[k, l] < min)
+					{
+						min = array[k, l];
+						row0 = k + 1;
+						column0 = l + 1;
+					}
+					l++;
+				}
+				k++;
+			}
+			k = 0;
+			while (k < n)
+			{
+				l = 0;
+				while (l < m)
+				{
+					if (array[k, l] > max)
+					{
+						max = array[k, l];
+						row1 = k + 1;
+						column1 = l + 1;
+					}
+					l++;
+				}
+				k++;
+			}
+			Console.WriteLine("\nПервый минимальный элемент = {0} и имеет адрес[{1},{2}]\nПервый максимальный элемент = {3} и имеет адрес[{4},{5}]", min, row0, column0, max, row1, column1);
+		}
+		//int max = array.Cast<int>().Max(); // использовалось бы, если б не нужно было искать индексы элементов
+		//int min = array.Cast<int>().Min(); // использовалось бы, если б не нужно было искать индексы элементов	
+		//Console.Write($"{max}, {min}"); // использовалось бы, если б не нужно было искать индексы элементов
+	}
+}
