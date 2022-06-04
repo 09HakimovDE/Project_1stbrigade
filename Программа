@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 
 public class Program
 {
@@ -63,6 +64,8 @@ public class Program
 			Console.WriteLine("\nМатрица состоит из одного элемента = {0}. Этот элемент является и максимальным, и минимальным", array[0, 0]);
 			return;
         }
+		Stopwatch stopwatch = new Stopwatch();
+		stopwatch.Start();
 		int max = array[0, 0], min = array[0, 0], row0 = 1, column0 = 1, row1 = 1, column1 = 1;
 		k = 0;
 		if (variant == 0)
@@ -83,6 +86,7 @@ public class Program
 				k++;
 			}
 			Console.WriteLine("\nПервый минимальный элемент = {0} и имеет адрес[{1},{2}]", min, row0, column0);
+			Console.WriteLine("Время выполнения работы цикла = {0}", stopwatch.Elapsed);
 		}
 		if (variant == 1)
 		{
@@ -102,6 +106,7 @@ public class Program
 				k++;
 			}
 			Console.WriteLine("\nПервый максимальный элемент = {0} и имеет адрес[{1},{2}]", max, row1, column1);
+			Console.WriteLine("Время выполнения работы цикла = {0}", stopwatch.Elapsed);
 		}
 		if (variant == 2)
 		{
@@ -137,6 +142,7 @@ public class Program
 				k++;
 			}
 			Console.WriteLine("\nПервый минимальный элемент = {0} и имеет адрес[{1},{2}]\nПервый максимальный элемент = {3} и имеет адрес[{4},{5}]", min, row0, column0, max, row1, column1);
+			Console.WriteLine("Время выполнения работы цикла = {0}", stopwatch.Elapsed);
 		}
 		//int max = array.Cast<int>().Max(); // использовалось бы, если б не нужно было искать индексы элементов
 		//int min = array.Cast<int>().Min(); // использовалось бы, если б не нужно было искать индексы элементов	
